@@ -25,8 +25,8 @@ def home_view(request):
 def time_view(request):
     # обратите внимание – здесь HTML шаблона нет, 
     # возвращается просто текст
-    current_time = datetime.now().strftime("%Y.%m.%d %H:%M:%S")
-    msg = f'Текущее время: {current_time}'
+    current_time = datetime.datetime.now().time()
+    msg = f'Текущее время: {current_time.hour}:{current_time.minute}:{current_time.second}'
     return HttpResponse(msg)
 
 
@@ -36,6 +36,6 @@ def workdir_view(request):
     # директории
     list_dir = listdir()
     msg = ''
-    for item in list_dir:
+    for num, item in enumerate(list_dir):
         msg = msg + '<p>' + item + '</p>'
     return HttpResponse(msg)
