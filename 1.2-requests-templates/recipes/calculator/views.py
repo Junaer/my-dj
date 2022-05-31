@@ -32,11 +32,18 @@ DATA = {
 
 def calculator(request, name):
     servings = request.GET.get("servings")
-    for ingredient, amount in DATA['omlet'].items():
-        amo = amount*servings
+    new_data = DATA.copy()
+    if servings:
+        for ingredient, amount in DATA[name].items():
+            new_amount = amount * int(servings)
+            new_data[name][ingredient]=new_amount
+            context = {
+                'recipe': new_data[name]
+            }
+    else:
         context = {
-            'recipe': [ingredient, amo]
+            'recipe': DATA[name]
         }
-        return render(request, 'index.html', context, amo)
+    return render(request, 'index.html', context)
 
 
