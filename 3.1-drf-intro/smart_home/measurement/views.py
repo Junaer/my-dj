@@ -6,26 +6,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from .models import Sensor, Measurment
-from .serializers import SensorSerializer, MeasurmentSerializer, SensorsSerializer
+from .serializers import SensorSerializer, MeasurmentSerializer, SensorsSerializer, MainMeasurmentSerializer
 from rest_framework.generics import RetrieveAPIView
 
-# @api_view(['GET'])
-# def my_api(request):
-#     sensors = Sensor.objects.all()
-#     ser = SensorSerializer(sensors, many=True)
-#     data = {'sensors'}
-#     return Response(ser.data)
-
-# class MyAPI(APIView):
-#     def get(self, request):
-#         sensors = Sensor.objects.all()
-#         ser = SensorSerializer(sensors, many=True)
-#         return Response(ser.data)
-#
-#     def post(self, request):
-#         return Response({'status': 'ok'})
-
-class MyAPI(ListAPIView):
+class APISensors(ListAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorsSerializer
 
@@ -33,8 +17,33 @@ class MyAPI(ListAPIView):
         name = request.data['name']
         description = request.data['description']
         Sensor(name=name, description=description).save()
-        return Response(SensorsSerializer)
+        return Response(f'{name}: {description} created')
 
-class MyAPIsensor(RetrieveAPIView):
+
+class APISensor(RetrieveAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
+
+    def patch(self, request, pk):
+        description = request.data['description']
+        Sensor.objects.filter(id=int(pk)).update(description=description)
+        return Response(f'{description} update')
+
+class APIMeasurments(ListAPIView):
+    queryset = Measurment.objects.all()
+    serializer_class = MainMeasurmentSerializer
+
+    def post(self, request):
+        temperature = float(request.data['temperature'])
+        sensors = int(request.data['sensors'])
+        Measurment(temperature=temperature, sensors_id=sensors).save()
+        return Response(f'{temperature}: sensor number - {sensors} created')
+
+class APIMeasurment(RetrieveAPIView):
+    queryset = Measurment.objects.all()
+    serializer_class = MeasurmentSerializer
+
+    def patch(self, request, pk):
+        temperature = request.data['temperature']
+        Measurment.objects.filter(id=int(pk)).update(temperature=temperature)
+        return Response(f'{temperature} update')

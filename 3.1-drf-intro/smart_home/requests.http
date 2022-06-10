@@ -13,7 +13,7 @@ POST {{baseUrl}}/sensors/
 Content-Type: application/json
 
 {
-  "name": "ESP32",
+  "name": "ESP322",
   "description": "Датчик на кухне за холодильником"
 }
 
@@ -30,11 +30,11 @@ Content-Type: application/json
 ###
 
 # добавление измерения
-POST {{baseUrl}}/measurements/
+POST http://localhost:8000//measurement/7/
 Content-Type: application/json
 
 {
-  "sensor": 1,
+  "sensor": 7,
   "temperature": 22.3
 }
 
@@ -50,6 +50,16 @@ POST http://localhost:8000/sensors/
 Content-Type: application/json
 
 {
-  "name": "ESP32",
-  "description": "Датчик на кухне за холодильником"
+  "name": "ESP322132",
+  "description": "Датчик на кухне за холодильником2111"
+}
+
+###
+
+# обновление датчика
+PATCH http://localhost:8000/sensors/5/
+Content-Type: application/json
+
+{
+  "description": "Перенес датчик на балкон"
 }
