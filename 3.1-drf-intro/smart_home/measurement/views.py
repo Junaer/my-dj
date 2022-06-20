@@ -1,9 +1,7 @@
 # TODO: опишите необходимые обработчики, рекомендуется использовать generics APIView классы:
 # TODO: ListCreateAPIView, RetrieveUpdateAPIView, CreateAPIView
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
-from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from .models import Sensor, Measurment
 from .serializers import SensorSerializer, MeasurmentSerializer, SensorsSerializer, MainMeasurmentSerializer
