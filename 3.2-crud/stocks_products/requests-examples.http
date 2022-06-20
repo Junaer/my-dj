@@ -36,7 +36,7 @@ Content-Type: application/json
 ###
 
 # поиск продуктов по названию и описанию
-GET http://localhost:8000/api/v1/products/?search=помидор
+GET http://localhost:8000/api/v1/products/?search=meat
 Content-Type: application/json
 
 ###
@@ -64,18 +64,23 @@ Content-Type: application/json
 ###
 
 # обновляем записи на складе
-PATCH http://localhost:8000/api/v1/stocks/20/
+PATCH http://localhost:8000/api/v1/stocks/30/
 Content-Type: application/json
 
 {
   "positions": [
     {
-      "product": 3,
-      "quantity": 100,
+      "product": 1,
+      "quantity": 200,
       "price": 130.80
     },
     {
       "product": 2,
+      "quantity": 243,
+      "price": 145
+    },
+    {
+      "product": 3,
       "quantity": 243,
       "price": 145
     }
@@ -85,5 +90,5 @@ Content-Type: application/json
 ###
 
 # поиск складов, где есть определенный продукт
-GET http://localhost:8000/api/v1/stocks/?products=2
+GET http://localhost:8000/api/v1/stocks/?products=1
 Content-Type: application/json
